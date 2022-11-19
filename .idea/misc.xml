@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_login.xml" value="0.2" />
+        <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_login.xml" value="0.26685198054204307" />
+        <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_login2.xml" value="0.2" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_maps.xml" value="0.2" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_register.xml" value="0.1859375" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/activity_splash_screen.xml" value="0.15" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
+        <entry key="..\:/android/SiAbSis/app/src/main/res/layout/item_photo.xml" value="0.25" />
       </map>
     </option>
   </component>

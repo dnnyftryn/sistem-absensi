@@ -9,19 +9,32 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import com.aplikasi.siabsis.R
 import com.aplikasi.siabsis.databinding.ActivitySplashScreenBinding
+import com.aplikasi.siabsis.pref.UserPreference
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
+
+    private lateinit var pref: UserPreference
+
+    companion object {
+        private const val SPLASH_SCREEN_TIME = 4000L
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        pref = UserPreference(this)
+
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+            if (pref.getLogin()) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
             finish()
-        }, 3000)
+        }, SPLASH_SCREEN_TIME)
 
         supportActionBar?.hide()
 
