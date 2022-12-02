@@ -13,6 +13,9 @@
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
         <entry key="..\:/android/SiAbSis/app/src/main/res/layout/item_photo.xml" value="0.25" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_login2.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_scanner.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/custom_scanner.xml" value="0.19895833333333332" />
       </map>
     </option>
   </component>
