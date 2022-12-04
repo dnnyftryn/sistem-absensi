@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         binding.btn1.setOnClickListener {
-            startActivity(Intent(this, ScannerActivity::class.java))
+            startActivity(Intent(this, AbsenActivity::class.java))
         }
 
         binding.btnSLogin.setOnClickListener {

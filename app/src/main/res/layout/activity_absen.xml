@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.AbsenActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvContainerAbsensi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:translationY="5dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:id="@+id/tvLokasi"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp" />
+
+
+            <!-- container untuk tombol scan QR -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvScanAbsensi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:background="@color/md_blue_A400"
+                app:cardUseCompatPadding="false"
+                tools:cardBackgroundColor="@color/button_palette">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tvPindaiBarcode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Pindai Barcode"
+                        tools:textColor="@android:color/white" />
+
+
+                    <ProgressBar
+                        android:id="@+id/pbAbsensi1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/checklist"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/checklist"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <EditText
+                        android:id="@+id/etNoted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:hint="Masukan Catatan"
+
+                        />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- container untuk tombol selfie -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSelfieAbsensi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tvAbsensi2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toTopOf="@id/ivSelfieAbsensi"
+                        app:layout_constraintEnd_toStartOf="@id/ivAbsensi2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/ivAbsensi2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/app_name"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAbsensi2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvAbsensi2" />
+
+<!--                    <ProgressBar-->
+<!--                        android:id="@+id/pbAbsensi2"-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:visibility="invisible"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/ivAbsensi2"-->
+<!--                        app:layout_constraintEnd_toEndOf="@+id/ivAbsensi2"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/ivAbsensi2" />-->
+
+                    <ImageView
+                        android:id="@+id/ivSelfieAbsensi"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_margin="7dp"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvAbsensi2"
+                        app:layout_constraintTop_toBottomOf="@id/tvAbsensi2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- container untuk tombol submit -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSubmitAbsensi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tvAbsensi3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivAbsensi3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Submit"/>
+
+                    <ImageView
+                        android:id="@+id/ivAbsensi3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAbsensi3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvAbsensi3" />
+
+<!--                    <ProgressBar-->
+<!--                        android:id="@+id/pbAbsensi3"-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:visibility="invisible"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/ivAbsensi3"-->
+<!--                        app:layout_constraintEnd_toEndOf="@+id/ivAbsensi3"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/ivAbsensi3" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- pemindai barcode -->
+    <include
+        android:id="@+id/scanner"
+        layout="@layout/custom_scanner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/cvContainerAbsensi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,13 @@
 package com.aplikasi.siabsis.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aplikasi.siabsis.databinding.FragmentDashboardBinding
+import com.aplikasi.siabsis.ui.activity.MapsActivity
 
 class DashboardFragment : Fragment() {
 
@@ -22,6 +24,14 @@ class DashboardFragment : Fragment() {
     ): View {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnMaps.setOnClickListener {
+            startActivity(Intent(requireContext(), MapsActivity::class.java))
+        }
     }
 
     override fun onDestroyView() {

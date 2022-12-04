@@ -1,23 +1,24 @@
 package com.aplikasi.siabsis.ui.activity
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.View
+import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintSet.VISIBLE
 import androidx.core.content.ContextCompat
 import com.aplikasi.siabsis.R
-import com.aplikasi.siabsis.databinding.ActivityScannerBinding
+import com.aplikasi.siabsis.databinding.ActivityAbsenBinding
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
-import com.google.android.gms.vision.barcode.Barcode.ALL_FORMATS
 import com.google.android.gms.vision.barcode.BarcodeDetector
 
-class ScannerActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityScannerBinding
+class AbsenActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAbsenBinding
 
     private val requestCodeCameraPermission = 1001
     private lateinit var cameraSource: CameraSource
@@ -26,7 +27,7 @@ class ScannerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityScannerBinding.inflate(layoutInflater)
+        binding = ActivityAbsenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.hide()
@@ -43,7 +44,13 @@ class ScannerActivity : AppCompatActivity() {
         } else {
             setupControls()
         }
+
+        binding.pbAbsensi1.visibility = View.VISIBLE
+        binding.checklist.visibility = View.GONE
+
+
     }
+
 
     private fun setupControls() {
         barcodeDetector = BarcodeDetector.Builder(this)
@@ -55,12 +62,12 @@ class ScannerActivity : AppCompatActivity() {
             .setAutoFocusEnabled(true)
             .build()
 
-        binding.customScanner.cameraSurfaceView.holder.addCallback(
+        binding.scanner.cameraSurfaceView.holder.addCallback(
             object : SurfaceHolder.Callback {
                 override fun surfaceCreated(holder: SurfaceHolder) {
                     try {
                         if (ContextCompat.checkSelfPermission(
-                                this@ScannerActivity,
+                                this@AbsenActivity,
                                 android.Manifest.permission.CAMERA
                             ) != android.content.pm.PackageManager.PERMISSION_GRANTED
                         ) {
@@ -70,7 +77,7 @@ class ScannerActivity : AppCompatActivity() {
                             )
                             return
                         }
-                        cameraSource.start(binding.customScanner.cameraSurfaceView.holder)
+                        cameraSource.start(binding.scanner.cameraSurfaceView.holder)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -100,18 +107,31 @@ class ScannerActivity : AppCompatActivity() {
                     runOnUiThread {
                         cameraSource.stop()
                         Toast.makeText(
-                            this@ScannerActivity,
+                            this@AbsenActivity,
                             "value- $scannedValue",
                             Toast.LENGTH_SHORT
                         ).show()
-                        binding.customScanner.cameraSurfaceView.visibility = android.view.View.GONE
-                        Log.i("ScannerActivity", "value- $scannedValue")
+                        binding.pbAbsensi1.visibility = android.view.View.GONE
+                        binding.checklist.visibility = android.view.View.VISIBLE
+                        binding.scanner.cameraSurfaceView.visibility = android.view.View.GONE
+                        check()
                     }
                 } else {
-                    scannedValue = ""
+                    check()
                 }
             }
         })
     }
 
+    @SuppressLint("ResourceAsColor")
+    private fun check() {
+        if (scannedValue != "") {
+            binding.cvScanAbsensi.setCardBackgroundColor(ContextCompat.getColor(this, R.color.md_blue_400))
+            binding.tvPindaiBarcode.setTextColor(ContextCompat.getColor(this, R.color.white))
+        } else {
+            binding.cvScanAbsensi.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            binding.tvPindaiBarcode.setTextColor(ContextCompat.getColor(this, R.color.black))
+//            Toast.makeText(this, "null", Toast.LENGTH_LONG).show()
+        }
+    }
 }
