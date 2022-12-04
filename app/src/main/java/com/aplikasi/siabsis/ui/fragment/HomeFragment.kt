@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class HomeFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -34,10 +34,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     private val binding get() = _binding!!
 
     private lateinit var pref: UserPreference
-    private var mMap: GoogleMap? = null
-    var mGoogleApiClient: GoogleApiClient? = null
-    var mLocationRequest: LocationRequest? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,29 +48,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         super.onViewCreated(view, savedInstanceState)
         pref = UserPreference(requireContext())
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
         binding.tvLang.text = pref.getLatitude()
         binding.tvLat.text = pref.getLongitude()
 
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap!!.mapType = GoogleMap.MAP_TYPE_NORMAL
-        mMap!!.uiSettings.isZoomControlsEnabled = true
-        mMap!!.uiSettings.isZoomGesturesEnabled = true
-        mMap!!.uiSettings.isCompassEnabled = true
-//        val sydney = LatLng(-34.0, 151.0)
-        val lat = pref.getLatitude()
-        val long = pref.getLongitude()
-        val sydney = LatLng(lat.toDouble(), long.toDouble())
-        mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
-
-    }
 
 
 
@@ -83,23 +61,4 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         _binding = null
     }
 
-    override fun onConnected(bundle: Bundle?) {
-        mLocationRequest = LocationRequest()
-        mLocationRequest!!.interval = 1000
-        mLocationRequest!!.fastestInterval = 1000
-        mLocationRequest!!.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient!!,
-                mLocationRequest!!, requireContext() as com.google.android.gms.location.LocationListener
-            )
-        }
-    }
-
-    override fun onConnectionSuspended(i: Int) {}
 }

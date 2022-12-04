@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aplikasi.siabsis.databinding.FragmentDashboardBinding
+import com.aplikasi.siabsis.ui.activity.AbsenActivity
 import com.aplikasi.siabsis.ui.activity.MapsActivity
 
 class DashboardFragment : Fragment() {
@@ -30,7 +31,7 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnMaps.setOnClickListener {
-            startActivity(Intent(requireContext(), MapsActivity::class.java))
+            startActivity(Intent(requireContext(), AbsenActivity::class.java))
         }
     }
 

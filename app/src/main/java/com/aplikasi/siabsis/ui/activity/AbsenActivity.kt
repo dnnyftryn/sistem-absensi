@@ -1,6 +1,8 @@
 package com.aplikasi.siabsis.ui.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,18 +14,34 @@ import androidx.constraintlayout.widget.ConstraintSet.VISIBLE
 import androidx.core.content.ContextCompat
 import com.aplikasi.siabsis.R
 import com.aplikasi.siabsis.databinding.ActivityAbsenBinding
+import com.aplikasi.siabsis.pref.UserPreference
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 
-class AbsenActivity : AppCompatActivity() {
+class AbsenActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks {
     private lateinit var binding: ActivityAbsenBinding
+
+    private lateinit var pref: UserPreference
 
     private val requestCodeCameraPermission = 1001
     private lateinit var cameraSource: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
     private var scannedValue = ""
+
+    private var mMap: GoogleMap? = null
+    var mGoogleApiClient: GoogleApiClient? = null
+    var mLocationRequest: LocationRequest? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +49,12 @@ class AbsenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
+
+        pref = UserPreference(this)
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -114,6 +138,7 @@ class AbsenActivity : AppCompatActivity() {
                         binding.pbAbsensi1.visibility = android.view.View.GONE
                         binding.checklist.visibility = android.view.View.VISIBLE
                         binding.scanner.cameraSurfaceView.visibility = android.view.View.GONE
+                        binding.framMaps.visibility = View.VISIBLE
                         check()
                     }
                 } else {
@@ -134,4 +159,39 @@ class AbsenActivity : AppCompatActivity() {
 //            Toast.makeText(this, "null", Toast.LENGTH_LONG).show()
         }
     }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap!!.mapType = GoogleMap.MAP_TYPE_NORMAL
+        mMap!!.uiSettings.isZoomControlsEnabled = true
+        mMap!!.uiSettings.isZoomGesturesEnabled = true
+        mMap!!.uiSettings.isCompassEnabled = true
+//        val sydney = LatLng(-34.0, 151.0)
+        val lat = pref.getLatitude()
+        val long = pref.getLongitude()
+        val sydney = LatLng(lat.toDouble(), long.toDouble())
+        mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
+
+    }
+    override fun onConnected(bundle: Bundle?) {
+        mLocationRequest = LocationRequest()
+        mLocationRequest!!.interval = 1000
+        mLocationRequest!!.fastestInterval = 1000
+        mLocationRequest!!.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient!!,
+                mLocationRequest!!, this as com.google.android.gms.location.LocationListener
+            )
+        }
+    }
+
+    override fun onConnectionSuspended(i: Int) {}
 }
