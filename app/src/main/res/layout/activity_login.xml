@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.LoginActivity">
+    tools:context=".ui.murid.LoginMuridActivity">
 
     <ImageView
         android:id="@+id/iv_logo"
@@ -79,13 +79,5 @@
             android:layout_gravity="center"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="login 2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

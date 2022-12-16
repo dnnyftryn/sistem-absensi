@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aplikasi.siabsis.databinding.FragmentNotificationsBinding
 import com.aplikasi.siabsis.pref.UserPreference
-import com.aplikasi.siabsis.ui.activity.LoginActivity
+import com.aplikasi.siabsis.ui.murid.LoginMuridActivity
 
 class NotificationsFragment : Fragment() {
 
@@ -47,6 +47,6 @@ class NotificationsFragment : Fragment() {
         pref.removeData()
         pref.editor?.clear()?.commit()
         (activity as AppCompatActivity).finish()
-        startActivity(Intent(requireActivity(), LoginActivity::class.java))
+        startActivity(Intent(requireActivity(), LoginMuridActivity::class.java))
     }
 }

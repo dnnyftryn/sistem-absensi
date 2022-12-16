@@ -1,9 +1,11 @@
-package com.aplikasi.siabsis.ui.activity
+package com.aplikasi.siabsis.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.aplikasi.siabsis.databinding.ActivityChooseLoginBinding
+import com.aplikasi.siabsis.ui.murid.LoginMuridActivity
+import com.aplikasi.siabsis.ui.guru.LoginGuruActivity
 
 class ChooseLoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChooseLoginBinding
@@ -16,11 +18,11 @@ class ChooseLoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         binding.cardStudent.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, LoginGuruActivity::class.java))
         }
 
         binding.cardTeacher.setOnClickListener {
-            startActivity(Intent(this, LoginActivity2::class.java))
+            startActivity(Intent(this, LoginMuridActivity::class.java))
         }
     }
 }

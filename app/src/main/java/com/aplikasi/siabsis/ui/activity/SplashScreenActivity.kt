@@ -7,9 +7,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import com.aplikasi.siabsis.R
 import com.aplikasi.siabsis.databinding.ActivitySplashScreenBinding
 import com.aplikasi.siabsis.pref.UserPreference
+import com.aplikasi.siabsis.ui.ChooseLoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
@@ -28,13 +28,17 @@ class SplashScreenActivity : AppCompatActivity() {
         pref = UserPreference(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (pref.getLogin()) {
-                startActivity(Intent(this, MainActivity::class.java))
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
+            startActivity(Intent(this, ChooseLoginActivity::class.java))
             finish()
         }, SPLASH_SCREEN_TIME)
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            if (pref.getLogin()) {
+//                startActivity(Intent(this, MainActivity::class.java))
+//            } else {
+//                startActivity(Intent(this, ChooseLoginActivity::class.java))
+//            }
+//            finish()
+//        }, SPLASH_SCREEN_TIME)
 
         supportActionBar?.hide()
 

@@ -39,7 +39,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.C
     private lateinit var barcodeDetector: BarcodeDetector
     private var scannedValue = ""
 
-    private var mMap: GoogleMap? = null
+        private var mMap: GoogleMap? = null
     var mGoogleApiClient: GoogleApiClient? = null
     var mLocationRequest: LocationRequest? = null
 
@@ -166,10 +166,10 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.C
         mMap!!.uiSettings.isZoomControlsEnabled = true
         mMap!!.uiSettings.isZoomGesturesEnabled = true
         mMap!!.uiSettings.isCompassEnabled = true
-//        val sydney = LatLng(-34.0, 151.0)
-        val lat = pref.getLatitude()
-        val long = pref.getLongitude()
-        val sydney = LatLng(lat.toDouble(), long.toDouble())
+        val sydney = LatLng(-34.0, 151.0)
+//        val lat = pref.getLatitude()
+//        val long = pref.getLongitude()
+//        val sydney = LatLng(lat.toDouble(), long.toDouble())
         mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
