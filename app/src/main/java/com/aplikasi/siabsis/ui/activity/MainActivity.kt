@@ -108,37 +108,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission", "SetTextI18n")
-    private fun getLocation() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    val location: Location? = task.result
-                    if (location != null) {
-                        val geocoder = Geocoder(this, Locale.getDefault())
-                        val list: List<Address> =
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                        binding.apply {
-                            val lat =  list[0].latitude
-                            val long = list[0].longitude
-                            pref.setLatitude(lat.toString())
-                            pref.setLongitude(long.toString())
-                            pref.setAddress(list[0].getAddressLine(0))
-//                            tvLatitude.text = "Latitude\n${list[0].latitude}"
-//                            tvLongitude.text = "Longitude\n${list[0].longitude}"
-//                            tvCountryName.text = "Country Name\n${list[0].countryName}"
-//                            tvLocality.text = "Locality\n${list[0].locality}"
-//                            tvAddress.text = "Address\n${list[0].getAddressLine(0)}"
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
-            }
-        } else {
-            requestPermissions()
-        }
-    }
+//    @SuppressLint("MissingPermission", "SetTextI18n")
+//    private fun getLocation() {
+//        if (checkPermissions()) {
+//            if (isLocationEnabled()) {
+//                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+//                    val location: Location? = task.result
+//                    if (location != null) {
+//                        val geocoder = Geocoder(this, Locale.getDefault())
+//                        val list: List<Address> =
+//                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+//                        binding.apply {
+//                            val lat =  list[0].latitude
+//                            val long = list[0].longitude
+//                            pref.setLatitude(lat.toString())
+//                            pref.setLongitude(long.toString())
+//                            pref.setAddress(list[0].getAddressLine(0))
+////                            tvLatitude.text = "Latitude\n${list[0].latitude}"
+////                            tvLongitude.text = "Longitude\n${list[0].longitude}"
+////                            tvCountryName.text = "Country Name\n${list[0].countryName}"
+////                            tvLocality.text = "Locality\n${list[0].locality}"
+////                            tvAddress.text = "Address\n${list[0].getAddressLine(0)}"
+//                        }
+//                    }
+//                }
+//            } else {
+//                Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
+//                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                startActivity(intent)
+//            }
+//        } else {
+//            requestPermissions()
+//        }
+//    }
 }

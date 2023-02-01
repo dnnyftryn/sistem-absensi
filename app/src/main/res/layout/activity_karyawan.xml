@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.NotificationsFragment">
+    tools:context=".ui.activity.hrd.KaryawanActivity">
 
-<!--   untuk form logout-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_karyawan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_karyawan"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

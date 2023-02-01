@@ -17,16 +17,33 @@
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/bg_rounded_button.xml" value="0.1" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/bg_rounded_edittext.xml" value="0.1" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/button_state_bg.xml" value="0.157" />
-        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_absen.xml" value="0.2634032634032634" />
-        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_choose_login.xml" value="0.33" />
-        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_login.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/checklist.xml" value="0.157" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/gradient.xml" value="0.157" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/ic_absen_masuk.xml" value="0.157" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/ic_maps_and_flags_pin_svgrepo_com.xml" value="0.157" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/drawable/team.xml" value="0.157" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_absen.xml" value="0.25" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_absen_hrd.xml" value="0.33" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_choose_login.xml" value="0.22" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_dashboard_guru.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_dashboard_murid.xml" value="0.22" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_hrdactivity.xml" value="0.22" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_karyawan.xml" value="0.33" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_login2.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_login3.xml" value="0.1859375" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_maps.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/activity_scanner.xml" value="0.2" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/custom_scanner.xml" value="0.19895833333333332" />
         <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
-        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/item_absen.xml" value="0.33" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/item_gridlayout.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/item_karyawan.xml" value="0.2" />
+        <entry key="..\:/android/yayat/sistem-absensi/app/src/main/res/layout/item_user.xml" value="0.19895833333333332" />
       </map>
     </option>
   </component>

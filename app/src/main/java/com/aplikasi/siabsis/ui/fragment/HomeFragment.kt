@@ -48,8 +48,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref = UserPreference(requireContext())
 
-        binding.tvLang.text = pref.getLatitude()
-        binding.tvLat.text = pref.getLongitude()
+//        binding.tvLang.text = pref.getLatitude()
+//        binding.tvLat.text = pref.getLongitude()
 
     }
 

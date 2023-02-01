@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aplikasi.siabsis.databinding.FragmentNotificationsBinding
 import com.aplikasi.siabsis.pref.UserPreference
-import com.aplikasi.siabsis.ui.murid.LoginMuridActivity
 
 class NotificationsFragment : Fragment() {
 
@@ -38,15 +37,5 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = UserPreference(requireActivity())
-        binding.textNotifications.setOnClickListener {
-            logout()
-        }
-    }
-
-    private fun logout() {
-        pref.removeData()
-        pref.editor?.clear()?.commit()
-        (activity as AppCompatActivity).finish()
-        startActivity(Intent(requireActivity(), LoginMuridActivity::class.java))
     }
 }

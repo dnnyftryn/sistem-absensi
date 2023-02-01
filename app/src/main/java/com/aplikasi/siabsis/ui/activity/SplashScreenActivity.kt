@@ -9,7 +9,6 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import com.aplikasi.siabsis.databinding.ActivitySplashScreenBinding
 import com.aplikasi.siabsis.pref.UserPreference
-import com.aplikasi.siabsis.ui.ChooseLoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
@@ -28,7 +27,7 @@ class SplashScreenActivity : AppCompatActivity() {
         pref = UserPreference(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, ChooseLoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, SPLASH_SCREEN_TIME)
 //        Handler(Looper.getMainLooper()).postDelayed({

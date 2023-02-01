@@ -1,4 +1,4 @@
-package com.aplikasi.siabsis.ui.activity
+package com.aplikasi.siabsis.ui.activity.hrd
 
 import android.Manifest
 import android.content.Context

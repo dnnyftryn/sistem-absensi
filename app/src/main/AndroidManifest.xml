@@ -24,10 +24,16 @@
         android:theme="@style/Theme.SiAbSis"
         tools:targetApi="31">
         <activity
-            android:name=".DashboardGuruActivity"
+            android:name=".ui.activity.hrd.KaryawanActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ChooseLoginActivity"
+            android:name=".ui.activity.hrd.AbsenHrdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.hrd.HRDActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.AbsenActivity"
@@ -51,20 +57,14 @@
             android:value="AIzaSyDzf654y8OAa33VwV6p2DptZFFEt9TtICo" />
 
         <activity
-            android:name=".ui.activity.MapsActivity"
+            android:name=".ui.activity.hrd.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".ui.guru.LoginGuruActivity"
-            android:exported="false" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.murid.LoginMuridActivity"
+            android:name=".ui.activity.hrd.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.SplashScreenActivity"
