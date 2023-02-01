@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aplikasi.siabsis.databinding.FragmentNotificationsBinding
 import com.aplikasi.siabsis.pref.UserPreference
+import com.aplikasi.siabsis.ui.activity.LoginActivity
 
 class NotificationsFragment : Fragment() {
 
@@ -37,5 +38,9 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = UserPreference(requireActivity())
+
+        binding.logout.setOnClickListener {
+            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+        }
     }
 }

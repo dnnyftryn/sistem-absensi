@@ -24,8 +24,8 @@ internal class UserPreference (context : Context) {
     private val preferences = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
     val editor = preferences.edit()
 
-    fun setUser(value: FirebaseUser?) {
-        editor.putString(EMAIL, value?.email)
+    fun setUser(value: String?) {
+        editor.putString(EMAIL, value)
         editor.apply()
     }
 

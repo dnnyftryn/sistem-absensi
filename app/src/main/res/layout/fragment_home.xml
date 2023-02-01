@@ -61,7 +61,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tv_divisi"
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="achmadhidayat@gmail.com"

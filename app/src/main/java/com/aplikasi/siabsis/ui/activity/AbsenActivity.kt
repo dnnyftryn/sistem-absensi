@@ -33,6 +33,11 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.util.*
 
 class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityAbsenBinding
@@ -44,6 +49,11 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var barcodeDetector: BarcodeDetector
     private var scannedValue = ""
     private var mMap: GoogleMap? = null
+
+    private var status: String? = null
+    private var keterangan: String? = null
+    private var current: String? = null
+
     companion object {
         var latitude = 0.0
         var longitude = 0.0
@@ -55,10 +65,16 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
 
+    private lateinit var dbRef: DatabaseReference
+
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAbsenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val nama = binding.etNama.text.toString().trim()
+        dbRef = FirebaseDatabase.getInstance().getReference("absen/$nama")
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLocation()
@@ -84,7 +100,37 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             setupControls()
         }
+        val bundle = intent.extras
+        status = bundle?.getString("absen")
+        binding.statusAbsen.setText("$status")
+        binding.email.setText(pref.getUser())
+        kirimData()
 
+        val time = LocalTime.now()
+        val time1 = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        current = formatter.format(time1)
+
+        keterangan = when(time.hour){
+            in 8..16 -> {
+                "terlambat"
+            } else -> {
+                "tepat waktu"
+            }
+        }
+
+    }
+
+    private fun kirimData() {
+        binding.kirim.setOnClickListener {
+            val qrCode = scannedValue.trim()
+            val status = status
+            val nama = binding.etNama.text.toString().trim()
+            val email = binding.email.text.toString().trim()
+            val divisi = binding.eteDivisi.text.toString().trim()
+
+            Log.d("check data", "$nama, $divisi, $qrCode, $status $email, $current, $keterangan ")
+        }
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -223,7 +269,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                         ).show()
                         binding.scanner.cameraSurfaceView.visibility = android.view.View.GONE
                         binding.framMaps.visibility = View.VISIBLE
-                        binding.qrCode.setText(scannedValue)
+//                        binding.qrCode.setText(scannedValue)
                     }
                 }
             }

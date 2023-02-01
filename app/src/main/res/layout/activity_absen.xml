@@ -18,13 +18,14 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
-                android:id="@+id/qrCode"
+                android:id="@+id/statusAbsen"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:hint="ID QR Code"
+                android:hint="Absen Masuk"
                 android:layout_margin="10dp"
                 android:paddingStart="35dp"
                 android:focusable="false"
+                android:clickable="false"
                 android:textColorHint="@color/color_black_text"
                 android:background="@drawable/button_state_bg"
                 tools:ignore="Autofill,HardcodedText,RtlSymmetry,TextFields" />
@@ -34,17 +35,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="10dp"
-                android:hint="Nama Mahasiswa"
+                android:hint="Nama Lengkap"
                 android:paddingStart="35dp"
                 android:textColorHint="@color/color_black_text"
                 android:background="@drawable/button_state_bg"
                 tools:ignore="Autofill,HardcodedText,RtlSymmetry,TextFields" />
 
             <EditText
-                android:id="@+id/etNIM"
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:hint="NIM"
+                android:hint="Email"
+                android:focusable="false"
+                android:clickable="false"
                 android:layout_margin="10dp"
                 android:paddingStart="35dp"
                 android:textColorHint="@color/color_black_text"
@@ -52,28 +55,19 @@
                 tools:ignore="Autofill,HardcodedText,RtlSymmetry,TextFields" />
 
             <EditText
-                android:id="@+id/etFakultas"
+                android:id="@+id/eteDivisi"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:hint="Fakultas"
+                android:hint="Divisi"
                 android:layout_margin="10dp"
                 android:paddingStart="35dp"
                 android:textColorHint="@color/color_black_text"
                 android:background="@drawable/button_state_bg"
                 tools:ignore="Autofill,HardcodedText,RtlSymmetry,TextFields" />
 
-            <EditText
-                android:id="@+id/etProdi"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:hint="Prodi"
-                android:paddingStart="35dp"
-                android:layout_margin="10dp"
-                android:textColorHint="@color/color_black_text"
-                android:background="@drawable/button_state_bg"
-                tools:ignore="Autofill,HardcodedText,RtlSymmetry,TextFields" />
 
             <Button
+                android:id="@+id/kirim"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

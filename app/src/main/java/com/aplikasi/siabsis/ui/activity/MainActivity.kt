@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         pref = UserPreference(this)
 
         val navView: BottomNavigationView = binding.navView

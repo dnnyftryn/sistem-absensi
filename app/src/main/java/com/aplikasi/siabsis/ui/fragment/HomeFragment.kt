@@ -1,29 +1,16 @@
 package com.aplikasi.siabsis.ui.fragment
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.aplikasi.siabsis.R
 import com.aplikasi.siabsis.databinding.FragmentHomeBinding
 import com.aplikasi.siabsis.pref.UserPreference
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.aplikasi.siabsis.ui.activity.AbsenActivity
+import com.aplikasi.siabsis.ui.activity.hrd.KaryawanActivity
 
 class HomeFragment : Fragment() {
 
@@ -48,8 +35,32 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref = UserPreference(requireContext())
 
-//        binding.tvLang.text = pref.getLatitude()
-//        binding.tvLat.text = pref.getLongitude()
+//        val email = requireArguments().getString("email")
+        binding.tvEmail.text = pref.getUser()
+        binding.cardViewTeam.setOnClickListener {
+            startActivity(Intent(requireActivity(), KaryawanActivity::class.java))
+        }
+        binding.cardViewAbsenMasuk.setOnClickListener {
+
+            val bundle = Bundle()
+            bundle.putString("absen", "Absen Masuk")
+            val intent = Intent(requireActivity(), AbsenActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+
+        }
+
+        binding.cardViewAbsenKeluar.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("absen", "Absen Keluar")
+            val intent = Intent(requireActivity(), AbsenActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
+
+        binding.cardViewAnnouncement.setOnClickListener {
+
+        }
 
     }
 
