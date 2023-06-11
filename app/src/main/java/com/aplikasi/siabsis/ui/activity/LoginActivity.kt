@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
                         val email = task.result.user!!.email
                         pref.setUser(email)
                         pref.setLogin(true)
+                        pref.setUid(task.result.user!!.uid)
                         Toast.makeText(this, "Selamat datang ${task.result.user!!.email}", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)

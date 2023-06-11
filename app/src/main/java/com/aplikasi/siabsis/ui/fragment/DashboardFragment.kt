@@ -14,6 +14,7 @@ import com.aplikasi.siabsis.databinding.FragmentDashboardBinding
 import com.aplikasi.siabsis.pref.UserPreference
 import com.aplikasi.siabsis.ui.adapter.AbsenAdapter
 import com.aplikasi.siabsis.ui.adapter.UserAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -55,7 +56,8 @@ class DashboardFragment : Fragment() {
 
     private fun getListAbsensi(nama: String) {
         list.clear()
-        dbRef = FirebaseDatabase.getInstance().getReference("absen")
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        dbRef = FirebaseDatabase.getInstance().getReference(danny)
         dbRef
             .addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

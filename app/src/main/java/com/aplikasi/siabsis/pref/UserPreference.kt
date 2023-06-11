@@ -14,6 +14,7 @@ internal class UserPreference (context : Context) {
     companion object {
         const val EMAIL = "email"
         const val NAMA = "nama"
+        const val UID = "UID"
         const val LATITUDE = "lat"
         const val LONGITUDE = "long"
         const val COUNTRY_NAME = "country"
@@ -41,6 +42,15 @@ internal class UserPreference (context : Context) {
 
     fun getNama(): String {
         return preferences.getString(NAMA,"").toString()
+    }
+
+    fun setUid(value: String?) {
+        editor.putString(UID, value)
+        editor.apply()
+    }
+
+    fun getUid(): String {
+        return preferences.getString(UID,"").toString()
     }
 
     fun setLatitude(value: String?) {

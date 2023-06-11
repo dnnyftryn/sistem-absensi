@@ -36,6 +36,7 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
@@ -131,7 +132,11 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                 "tepat waktu"
             }
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        gpsHelper = GPSHelper.getInstance(this)!!
     }
 
     private fun kirimData() {
@@ -171,28 +176,40 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                             "0000-00-00 00:00:00",
                             keterangan
                         )
+                        val uid = FirebaseAuth.getInstance().currentUser?.uid
                         dbRef
                             .child("absen")
                             .child(nama)
                             .setValue(absen)
                             .addOnCompleteListener {
-                            Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
-                                .show()
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
+                                dbRef
+                                    .child(uid.toString())
+                                    .setValue(absen)
+                                    .addOnCompleteListener {
+                                        Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT).show()
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                        finish()
+                                    }
                             }
                     } else {
+                        val dateNow = SimpleDateFormat("yyyyMMdd").format(Date())
                         val tanggalKeluar = current.toString()
                         dbRef
-                            .child("absen")
-                            .child(nama)
+                            .child("$nama$dateNow")
                             .child("tanggal_keluar" )
                             .setValue(tanggalKeluar)
                             .addOnCompleteListener {
-                                Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
-                                    .show()
-                                startActivity(Intent(this, MainActivity::class.java))
-                                finish()
+                                dbRef
+                                    .child("absen")
+                                    .child(nama)
+                                    .child("tanggal_keluar")
+                                    .setValue(tanggalKeluar)
+                                    .addOnCompleteListener {
+                                        Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
+                                            .show()
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                        finish()
+                                    }
                             }
                     }
                 }
@@ -359,23 +376,25 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
 
-        val lat = -6.7364858
-        val long = 108.5224431
+        val lat = -6.7135002
+        val long = 108.5489882
         val circle = mMap!!.addCircle(
             CircleOptions()
                 .center(LatLng(lat, long))
-                .radius(100.0)
+                .radius(1000.0)
                 .strokeColor(Color.RED)
                 .fillColor(Color.TRANSPARENT)
         )
         circle.isVisible = true
 //        -6.7364858,108.5224431
-        val distance = FloatArray(2)
+//        -6.7135002,108.5489882
+        val distance = FloatArray(1     )
         Location.distanceBetween(latitude, longitude, lat, long, distance)
 
         binding.kirim.setOnClickListener {
-            if (distance[0] > 100) {
+            if (distance[0] > 1000) {
                 Toast.makeText(this, "Anda diluar kantor", Toast.LENGTH_SHORT).show()
+//                kirimData()
             } else {
                 Toast.makeText(this, "Anda didalam kantor", Toast.LENGTH_SHORT).show()
                 kirimData()
