@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.aplikasi.siabsis.data.model.Absen
+import com.aplikasi.siabsis.data.model.RegisterUser
 import com.aplikasi.siabsis.databinding.FragmentDashboardBinding
 import com.aplikasi.siabsis.pref.UserPreference
+import com.aplikasi.siabsis.ui.adapter.AbsenAdapter
+import com.aplikasi.siabsis.ui.adapter.UserAdapter
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,6 +30,8 @@ class DashboardFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var dbRef: DatabaseReference
     private lateinit var pref: UserPreference
+    private lateinit var list: ArrayList<Absen>
+    private lateinit var absenRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,30 +44,38 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dbRef = FirebaseDatabase.getInstance().getReference("Absen")
         pref = UserPreference(requireContext())
+        list = ArrayList<Absen>()
+        Log.d("TAG", "onViewCreated: ${pref.getNama()}")
         getListAbsensi(pref.getNama())
+        absenRecyclerView = binding.recyclerViewAbsensi
+        absenRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        absenRecyclerView.setHasFixedSize(true)
     }
 
     private fun getListAbsensi(nama: String) {
+        list.clear()
+        dbRef = FirebaseDatabase.getInstance().getReference("absen")
         dbRef
-            .child("absen")
-            .child(nama)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val list = ArrayList<Absen>()
-                    for (data in snapshot.children) {
-                        val absen = data.getValue(Absen::class.java)
-                        absen?.let { list.add(it) }
-                        Log.d("TAG", "onDataChange: $absen")
+            .addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    for (listUser in snapshot.children){
+                        val userData = listUser.getValue(Absen::class.java)
+                        if (userData != null){
+                            list.add(userData)
+                        }
+                        val mAdapter = AbsenAdapter(list)
+                        absenRecyclerView.adapter = mAdapter
                     }
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("TAG", "onCancelled: ${error.message}")
-                }
-
             }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     override fun onDestroyView() {

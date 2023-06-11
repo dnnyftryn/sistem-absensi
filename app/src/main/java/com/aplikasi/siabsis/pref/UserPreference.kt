@@ -35,12 +35,12 @@ internal class UserPreference (context : Context) {
     }
 
     fun setNama(value: String?) {
-        editor.putString(EMAIL, value)
+        editor.putString(NAMA, value)
         editor.apply()
     }
 
     fun getNama(): String {
-        return preferences.getString(EMAIL,"").toString()
+        return preferences.getString(NAMA,"").toString()
     }
 
     fun setLatitude(value: String?) {

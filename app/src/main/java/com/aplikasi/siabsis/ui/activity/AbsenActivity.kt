@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.vision.CameraSource
@@ -75,7 +77,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
         pref = UserPreference(this)
 
-        dbRef = FirebaseDatabase.getInstance().getReference("absen")
+        dbRef = FirebaseDatabase.getInstance().getReference()
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -104,7 +106,18 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         status = bundle?.getString("absen")
         binding.statusAbsen.setText("$status")
         binding.email.setText(pref.getUser())
-        kirimData()
+
+        if (status != "Absen Masuk") {
+            if (pref.getNama() == null) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                binding.etNama.setText(pref.getNama())
+                binding.etNama.isClickable = false
+                binding.etNama.isFocusable = false
+            }
+
+        }
 
         val time = LocalTime.now()
         val time1 = Calendar.getInstance().time
@@ -122,7 +135,6 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun kirimData() {
-        binding.kirim.setOnClickListener {
             val qrCode = scannedValue.trim()
             val status = status
             val nama = binding.etNama.text.toString().trim()
@@ -145,16 +157,18 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 else -> {
                     pref.setNama(nama)
+                    val tanggal = SimpleDateFormat("yyyy-MM-dd").format(Date())
 
                     if (status == "Absen Masuk") {
                         val absen = Absen(
                             nama,
+                            tanggal,
                             divisi,
                             qrCode,
                             status,
                             email,
-                            current,
-                            "",
+                            current.toString(),
+                            "0000-00-00 00:00:00",
                             keterangan
                         )
                         dbRef
@@ -168,7 +182,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                             finish()
                             }
                     } else {
-                        val tanggalKeluar = current
+                        val tanggalKeluar = current.toString()
                         dbRef
                             .child("absen")
                             .child(nama)
@@ -184,7 +198,6 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
 
             }
-        }
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -346,5 +359,27 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15f))
 
+        val lat = -6.7364858
+        val long = 108.5224431
+        val circle = mMap!!.addCircle(
+            CircleOptions()
+                .center(LatLng(lat, long))
+                .radius(100.0)
+                .strokeColor(Color.RED)
+                .fillColor(Color.TRANSPARENT)
+        )
+        circle.isVisible = true
+//        -6.7364858,108.5224431
+        val distance = FloatArray(2)
+        Location.distanceBetween(latitude, longitude, lat, long, distance)
+
+        binding.kirim.setOnClickListener {
+            if (distance[0] > 100) {
+                Toast.makeText(this, "Anda diluar kantor", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Anda didalam kantor", Toast.LENGTH_SHORT).show()
+                kirimData()
+            }
+        }
     }
 }
