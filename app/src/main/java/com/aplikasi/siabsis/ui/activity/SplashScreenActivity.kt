@@ -26,18 +26,18 @@ class SplashScreenActivity : AppCompatActivity() {
 
         pref = UserPreference(this)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }, SPLASH_SCREEN_TIME)
 //        Handler(Looper.getMainLooper()).postDelayed({
-//            if (pref.getLogin()) {
-//                startActivity(Intent(this, MainActivity::class.java))
-//            } else {
-//                startActivity(Intent(this, ChooseLoginActivity::class.java))
-//            }
+//            startActivity(Intent(this, LoginActivity::class.java))
 //            finish()
 //        }, SPLASH_SCREEN_TIME)
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (pref.getLogin()) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+            finish()
+        }, SPLASH_SCREEN_TIME)
 
         supportActionBar?.hide()
 

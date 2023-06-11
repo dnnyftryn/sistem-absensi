@@ -41,6 +41,7 @@ class NotificationsFragment : Fragment() {
 
         binding.logout.setOnClickListener {
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            pref.removeData()
         }
     }
 }

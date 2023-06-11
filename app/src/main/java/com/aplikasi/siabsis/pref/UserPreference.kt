@@ -13,6 +13,7 @@ internal class UserPreference (context : Context) {
 
     companion object {
         const val EMAIL = "email"
+        const val NAMA = "nama"
         const val LATITUDE = "lat"
         const val LONGITUDE = "long"
         const val COUNTRY_NAME = "country"
@@ -30,6 +31,15 @@ internal class UserPreference (context : Context) {
     }
 
     fun getUser(): String {
+        return preferences.getString(EMAIL,"").toString()
+    }
+
+    fun setNama(value: String?) {
+        editor.putString(EMAIL, value)
+        editor.apply()
+    }
+
+    fun getNama(): String {
         return preferences.getString(EMAIL,"").toString()
     }
 

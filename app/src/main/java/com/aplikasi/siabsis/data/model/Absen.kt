@@ -6,6 +6,7 @@ data class Absen (
     var qrCode: String? = null,
     var status: String? = null,
     var email: String? = null,
-    var tanggal: String? = null,
+    var tanggal_masuk: String? = null,
+    var tanggal_keluar: String? = null,
     var keterangan: String? = null,
 )

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.aplikasi.siabsis.R
+import com.aplikasi.siabsis.data.model.Absen
 import com.aplikasi.siabsis.databinding.ActivityAbsenBinding
 import com.aplikasi.siabsis.helper.GPSHelper
 import com.aplikasi.siabsis.pref.UserPreference
@@ -72,8 +73,9 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = ActivityAbsenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val nama = binding.etNama.text.toString().trim()
-        dbRef = FirebaseDatabase.getInstance().getReference("absen/$nama")
+        pref = UserPreference(this)
+
+        dbRef = FirebaseDatabase.getInstance().getReference("absen")
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -81,8 +83,6 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         gpsHelper = GPSHelper.getInstance(this)!!
 
         supportActionBar?.hide()
-
-        pref = UserPreference(this)
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -130,6 +130,60 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
             val divisi = binding.eteDivisi.text.toString().trim()
 
             Log.d("check data", "$nama, $divisi, $qrCode, $status $email, $current, $keterangan ")
+
+            when {
+                nama.isEmpty() -> {
+                    binding.etNama.error = "Nama tidak boleh kosong"
+                    binding.etNama.requestFocus()
+                }
+                divisi.isEmpty() -> {
+                    binding.eteDivisi.error = "Divisi tidak boleh kosong"
+                    binding.eteDivisi.requestFocus()
+                }
+                qrCode.isEmpty() -> {
+                    Toast.makeText(this, "QR Code tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    pref.setNama(nama)
+
+                    if (status == "Absen Masuk") {
+                        val absen = Absen(
+                            nama,
+                            divisi,
+                            qrCode,
+                            status,
+                            email,
+                            current,
+                            "",
+                            keterangan
+                        )
+                        dbRef
+                            .child("absen")
+                            .child(nama)
+                            .setValue(absen)
+                            .addOnCompleteListener {
+                            Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
+                                .show()
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                            }
+                    } else {
+                        val tanggalKeluar = current
+                        dbRef
+                            .child("absen")
+                            .child(nama)
+                            .child("tanggal_keluar" )
+                            .setValue(tanggalKeluar)
+                            .addOnCompleteListener {
+                                Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
+                                    .show()
+                                startActivity(Intent(this, MainActivity::class.java))
+                                finish()
+                            }
+                    }
+                }
+
+            }
         }
     }
 
