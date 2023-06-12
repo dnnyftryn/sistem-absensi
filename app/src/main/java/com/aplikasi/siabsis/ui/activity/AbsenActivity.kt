@@ -139,6 +139,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         gpsHelper = GPSHelper.getInstance(this)!!
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun kirimData() {
             val qrCode = scannedValue.trim()
             val status = status
@@ -176,34 +177,40 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                             "0000-00-00 00:00:00",
                             keterangan
                         )
-                        val uid = FirebaseAuth.getInstance().currentUser?.uid
+                        val date = SimpleDateFormat("yyyyMMdd").format(Date())
+                        val splitEmail = email.split("@")
                         dbRef
                             .child("absen")
-                            .child(nama)
+                            .child(date)
+                            .child(splitEmail[0])
                             .setValue(absen)
                             .addOnCompleteListener {
                                 dbRef
-                                    .child(uid.toString())
+                                    .child(splitEmail[0])
+                                    .child(date)
                                     .setValue(absen)
                                     .addOnCompleteListener {
-                                        Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
+                                            .show()
                                         startActivity(Intent(this, MainActivity::class.java))
                                         finish()
                                     }
                             }
                     } else {
-                        val dateNow = SimpleDateFormat("yyyyMMdd").format(Date())
-                        val tanggalKeluar = current.toString()
+                        val date = SimpleDateFormat("yyyyMMdd").format(Date())
+                        val splitEmail = email.split("@")
                         dbRef
-                            .child("$nama$dateNow")
-                            .child("tanggal_keluar" )
-                            .setValue(tanggalKeluar)
+                            .child("absen")
+                            .child(date)
+                            .child(splitEmail[0])
+                            .child("tanggal_keluar")
+                            .setValue(current.toString())
                             .addOnCompleteListener {
                                 dbRef
-                                    .child("absen")
-                                    .child(nama)
+                                    .child(splitEmail[0])
+                                    .child(date)
                                     .child("tanggal_keluar")
-                                    .setValue(tanggalKeluar)
+                                    .setValue(current.toString())
                                     .addOnCompleteListener {
                                         Toast.makeText(this, "Data berhasil dikirim", Toast.LENGTH_SHORT)
                                             .show()
@@ -392,13 +399,13 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         Location.distanceBetween(latitude, longitude, lat, long, distance)
 
         binding.kirim.setOnClickListener {
-            if (distance[0] > 1000) {
-                Toast.makeText(this, "Anda diluar kantor", Toast.LENGTH_SHORT).show()
-//                kirimData()
-            } else {
-                Toast.makeText(this, "Anda didalam kantor", Toast.LENGTH_SHORT).show()
-                kirimData()
-            }
+            kirimData()
+//            if (distance[0] > 1000) {
+//                Toast.makeText(this, "Anda diluar kantor", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Anda didalam kantor", Toast.LENGTH_SHORT).show()
+////                kirimData()
+//            }
         }
     }
 }

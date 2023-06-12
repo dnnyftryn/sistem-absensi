@@ -52,29 +52,28 @@ class DashboardFragment : Fragment() {
         absenRecyclerView = binding.recyclerViewAbsensi
         absenRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         absenRecyclerView.setHasFixedSize(true)
+
     }
 
     private fun getListAbsensi(nama: String) {
+        val splitEmail = pref.getUser().split("@")
+        Log.d("TAG", "getListAbsensi: ${splitEmail[0]}")
         list.clear()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
-        dbRef = FirebaseDatabase.getInstance().getReference(danny)
+        dbRef = FirebaseDatabase.getInstance().reference
         dbRef
-            .addValueEventListener(object : ValueEventListener{
+            .child(splitEmail[0])
+            .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
-                    for (listUser in snapshot.children){
-                        val userData = listUser.getValue(Absen::class.java)
-                        if (userData != null){
-                            list.add(userData)
-                        }
-                        val mAdapter = AbsenAdapter(list)
-                        absenRecyclerView.adapter = mAdapter
-                    }
+                for (data in snapshot.children) {
+                    val absen = data.getValue(Absen::class.java)
+                    list.add(absen!!)
+                    Log.d("TAG", "onDataChange: $absen")
                 }
+                absenRecyclerView.adapter = AbsenAdapter(list)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("TAG", "onCancelled: ${error.message}")
             }
 
         })
