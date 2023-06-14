@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import com.aplikasi.siabsis.databinding.ActivitySplashScreenBinding
 import com.aplikasi.siabsis.pref.UserPreference
+import com.aplikasi.siabsis.ui.activity.hrd.HRDActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
@@ -32,7 +33,11 @@ class SplashScreenActivity : AppCompatActivity() {
 //        }, SPLASH_SCREEN_TIME)
         Handler(Looper.getMainLooper()).postDelayed({
             if (pref.getLogin()) {
-                startActivity(Intent(this, MainActivity::class.java))
+                if (pref.getUser() == "admin") {
+                    startActivity(Intent(this, HRDActivity::class.java))
+                } else {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }

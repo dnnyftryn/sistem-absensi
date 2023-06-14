@@ -53,6 +53,8 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }
                     (email == "admin" && password == "admin") -> {
+                        pref.setLogin(true)
+                        pref.setUser("admin")
                         Toast.makeText(this, "Selamat datang HRD", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, HRDActivity::class.java))
                         finish()
