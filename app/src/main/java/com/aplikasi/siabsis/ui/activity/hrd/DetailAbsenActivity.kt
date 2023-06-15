@@ -47,8 +47,7 @@ class DetailAbsenActivity : AppCompatActivity() {
                         val value = data.getValue(Absen::class.java)
                         list.add(value!!)
                         Log.d("TAG", "onDataChangevalue: $value")
-                        val count = data.childrenCount
-                        binding.keterangan.text = count.toString()
+                        binding.keterangan.text = list.size.toString()
                     }
                     absenRecyclerView.adapter = AbsenAdapter(list)
                 }

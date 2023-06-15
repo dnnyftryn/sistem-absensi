@@ -2,17 +2,11 @@ package com.aplikasi.siabsis.ui.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
@@ -22,10 +16,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aplikasi.siabsis.R
 import com.aplikasi.siabsis.databinding.ActivityMainBinding
+import com.aplikasi.siabsis.helper.GPSHelper
 import com.aplikasi.siabsis.pref.UserPreference
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import java.util.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,15 +58,13 @@ class MainActivity : AppCompatActivity() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLocation()
+        GPSHelper.getInstance(this)
+        GPSHelper.getLocationByDevice(this)
+        GPSHelper.initCallback(this)
+        GPSHelper.isLocationEnabled(this)
     }
 
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
-            getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-    }
+
 
     private fun checkPermissions(): Boolean {
         if (ActivityCompat.checkSelfPermission(

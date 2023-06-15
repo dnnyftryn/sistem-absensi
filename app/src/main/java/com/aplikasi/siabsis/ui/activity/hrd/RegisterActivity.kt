@@ -39,19 +39,21 @@ class RegisterActivity : AppCompatActivity() {
             val alamat = binding.etAlamat.text.toString()
             val divisi = binding.etDivisi.text.toString()
 
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                binding.etSEmailAddress.error = "Email tidak boleh kosong"
-                binding.etSPassword.error = "Password tidak boleh kosong"
-                binding.etSConfPassword.error = "Konfirmasi"
+            when {
+                (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) -> {
+                    binding.etSEmailAddress.error = "Email tidak boleh kosong"
+                    binding.etSPassword.error = "Password tidak boleh kosong"
+                    binding.etSConfPassword.error = "Konfirmasi"
+                }
+                (password != confirmPassword) -> {
+                    binding.etSPassword.error = "Password tidak sama"
+                    binding.etSConfPassword.error = "Password tidak sama"
+                }
+                else -> {
+                    registerUser(email, password)
+                    daftarUser(namaLengkap, ttl, alamat, email, divisi)
+                }
             }
-
-            if (password != confirmPassword) {
-                binding.etSPassword.error = "Password tidak sama"
-                binding.etSConfPassword.error = "Password tidak sama"
-            }
-
-            registerUser(email, password)
-            daftarUser(namaLengkap, ttl, alamat, email, divisi)
         }
 
     }

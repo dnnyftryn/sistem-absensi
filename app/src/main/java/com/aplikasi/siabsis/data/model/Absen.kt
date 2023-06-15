@@ -14,4 +14,7 @@ data class Absen (
     val tanggal_masuk: String? = null,
     val tanggal_keluar: String? = null,
     val keterangan: String? = null,
+    val lat : String? = null,
+    val long : String? = null,
+    val alamat : String? = null,
 ) : Parcelable

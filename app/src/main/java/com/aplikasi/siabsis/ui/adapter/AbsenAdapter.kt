@@ -16,6 +16,7 @@ class AbsenAdapter(private val absen: ArrayList<Absen>) : RecyclerView.Adapter<A
         val jamPulang = itemView.findViewById<TextView>(R.id.jamPulang)
         val status = itemView.findViewById<TextView>(R.id.status)
         val nama = itemView.findViewById<TextView>(R.id.nama)
+        val alamat = itemView.findViewById<TextView>(R.id.alamat)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,5 +35,6 @@ class AbsenAdapter(private val absen: ArrayList<Absen>) : RecyclerView.Adapter<A
         holder.jamPulang.text = currentAbsen.tanggal_keluar
         holder.status.text = currentAbsen.keterangan
         holder.nama.text = currentAbsen.nama
+        holder.alamat.text = currentAbsen.alamat
     }
 }

@@ -57,6 +57,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
     private var status: String? = null
     private var keterangan: String? = null
     private var current: String? = null
+    private var alamat: String? = null
 
     companion object {
         var latitude = 0.0
@@ -86,7 +87,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         gpsHelper = GPSHelper.getInstance(this)!!
 
         supportActionBar?.hide()
-
+        GPSHelper.isLocationEnabled(this)
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -125,12 +126,31 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
         current = formatter.format(time1)
 
+        alamat()
+
         keterangan = when(time.hour){
             in 8..16 -> {
                 "terlambat"
             } else -> {
                 "tepat waktu"
             }
+        }
+    }
+
+    private fun alamat() {
+        val geocoder = android.location.Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            val address = addresses[0].getAddressLine(0)
+            val city = addresses[0].locality
+            val state = addresses[0].adminArea
+            val country = addresses[0].countryName
+            val postalCode = addresses[0].postalCode
+            val knownName = addresses[0].featureName
+
+            alamat = "$address, $city, $state, $country, $postalCode, $knownName"
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -175,7 +195,10 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
                             email,
                             current.toString(),
                             "0000-00-00 00:00:00",
-                            keterangan
+                            keterangan,
+                            latitude.toString(),
+                            longitude.toString(),
+                            alamat.toString()
                         )
                         val date = SimpleDateFormat("yyyyMMdd").format(Date())
                         val splitEmail = email.split("@")
@@ -295,6 +318,7 @@ class AbsenActivity : AppCompatActivity(), OnMapReadyCallback {
             requestPermissions()
             Log.d("TAG", "requestLocationPermission: permission granted")
             GPSHelper.initLocation(this)
+            GPSHelper.initCallback(this)
         }
     }
 

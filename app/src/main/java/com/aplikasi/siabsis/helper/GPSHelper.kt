@@ -3,13 +3,19 @@ package com.aplikasi.siabsis.helper
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Build
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.app.ActivityCompat.requestPermissions
 import com.aplikasi.siabsis.ui.activity.AbsenActivity
+import com.aplikasi.siabsis.ui.activity.LoginActivity
 import com.google.android.gms.location.*
 
 
@@ -23,7 +29,7 @@ object GPSHelper {
         if (instance == null) {
             Log.d("LOCATION", "Inisialisasi GPSHelper.")
             instance = GPSHelper
-            initCallback(context)
+            instance!!.initCallback(context)
         }
         return instance
     }
@@ -35,6 +41,59 @@ object GPSHelper {
     }
 
     var callback: LocationCallback? = null
+
+    fun isLocationEnabled(mActivity: Activity) {
+        // lokasi sudah diberikan izin
+        val locationManager = mActivity.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+
+        if (ActivityCompat.checkSelfPermission(
+                mActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                mActivity,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        } else {
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        }
+
+        var lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (lastKnownLocation == null){
+            lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val mock = lastKnownLocation?.isMock
+            Log.d("TAG", "isLocationEnabled1: ${lastKnownLocation?.isMock}")
+            if (mock == true) {
+                Toast.makeText(mActivity, "Anda Menggunakan Fake GPS", Toast.LENGTH_LONG).show()
+                val intent = Intent(mActivity, LoginActivity::class.java)
+                intent.putExtra("isMock", true)
+                mActivity.startActivity(intent)
+                mActivity.finish()
+            }
+        } else {
+            val mock = lastKnownLocation?.isFromMockProvider
+            Log.d("TAG", "isLocationEnabled2: ${lastKnownLocation?.isFromMockProvider}")
+            if (mock == true) {
+                Toast.makeText(mActivity, "Anda Menggunakan Fake GPS", Toast.LENGTH_LONG).show()
+                val intent = Intent(mActivity, LoginActivity::class.java)
+                intent.putExtra("isMock", true)
+                mActivity.startActivity(intent)
+                mActivity.finish()
+            }
+        }
+
+    }
 
     fun initCallback(mContext: Context) {
         if (callback == null) {
@@ -66,6 +125,7 @@ object GPSHelper {
                             Log.d("TAG", "onLocationResult: null || spoofed")
                             Log.d("TAG", "onLocationResult: $moclat, $moclong")
                             Log.d("TAG", "spoof: ${locations.size}")
+//                            TrackerReportAPI.reportSpoof(mContext, moclat, moclong)
                         }
 
                         else {
@@ -92,6 +152,8 @@ object GPSHelper {
                     }
                 }
             }
+        } else {
+            Log.d("TAG", "initCallback: callback is not null")
         }
     }
 
@@ -123,8 +185,9 @@ object GPSHelper {
     }
 
     fun getLocationByDevice(mContext: Context) {
-        var locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var lo = if (ActivityCompat.checkSelfPermission(
+        Log.d("TAG", "getLocationByDevice: ")
+        val locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val lo = if (ActivityCompat.checkSelfPermission(
                 mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
