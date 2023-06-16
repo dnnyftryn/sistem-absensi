@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aplikasi.siabsis.data.model.RegisterUser
 import com.aplikasi.siabsis.databinding.ActivityKaryawanBinding
+import com.aplikasi.siabsis.pref.UserPreference
 import com.aplikasi.siabsis.ui.adapter.UserAdapter
 import com.google.firebase.database.*
 
@@ -17,11 +18,14 @@ class KaryawanActivity : AppCompatActivity() {
     private lateinit var userList: ArrayList<RegisterUser>
     private lateinit var dbRef: DatabaseReference
 
+    private lateinit var pref : UserPreference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityKaryawanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        pref = UserPreference(this)
         supportActionBar!!.hide()
         absenRecyclerView = binding.recyclerViewKaryawan
         absenRecyclerView.layoutManager = LinearLayoutManager(this)
